@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- <include resource="logback_common.xml"/> -->    
+    <property name="server.name" value="${server.name}"/>
+
+    <!-- 콘솔 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level)[%c %cyan(%13F):%M:%L] %m%n</Pattern>            
+        </encoder>
+		<filter class="com.nicepay.starter.LogbackFilter"/>
+    </appender>
+    
+    <!-- 로그파일기록 -->
+	<appender name="dailyRolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/app/logs/starter/starter.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 하루 동안의 log를 남김 -->
+			<fileNamePattern>/app/logs/starter/starter.log.%d{yyyyMMdd}</fileNamePattern>
+			<!-- 30일동안 log를 저장함-->				
+			<maxHistory>60</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%13F:%L] %c:%M:%L %m%n</pattern>
+		</encoder>
+		<filter class="com.nicepay.starter.LogbackFilter"/>
+	</appender>
+    
+    <!-- DB 관련 출력 -->
+	<!-- 
+		jdbc.sqlonly: SQL문만을 로그로 남기며, PreparedStatement일 경우 관련된 argument 값으로 대체된 SQL문이 보여진다. 
+		jdbc.sqltiming: SQL문과 해당 SQL을 실행시키는데 수행된 시간 정보(milliseconds)를 포함한다.
+		jdbc.audit: ResultSet을 제외한 모든 JDBC 호출 정보를 로그로 남긴다. 많은 양의 로그가 생성되므로 특별히 JDBC 문제를 추적해야할 필요가 있는 경우를 제외하고는 사용을 권장하지 않는다.
+		jdbc.resultset: ResultSet을 포함한 모든 JDBC 호출 정보를 로그로 남기므로 매우 방대한 양의 로그가 생성된다.
+		jdbc.resultsettable: SQL 결과 조회된 데이터의 table을 로그로 남긴다. 
+	-->
+	<logger name="jdbc" level="OFF" additivity="false">
+		<appender-ref ref="console"/>
+	</logger>
+	<logger name="jdbc.sqlonly" level="OFF" additivity="false">
+		<appender-ref ref="console"/>
+		<appender-ref ref="dailyRolling"/>
+	</logger>
+	<logger name="jdbc.sqltiming" level="DEBUG" additivity="false">
+		<appender-ref ref="console"/>
+		<appender-ref ref="dailyRolling"/>
+	</logger>
+	<logger name="jdbc.audit" level="OFF" additivity="false">
+		<appender-ref ref="console"/>
+	</logger>
+	<logger name="jdbc.resultset" level="OFF" additivity="false">
+		<appender-ref ref="console"/>
+	</logger>
+	<logger name="jdbc.resultsettable" level="OFF" additivity="false">
+		<appender-ref ref="console"/>
+	</logger>
+	<logger name="jdbc.connection" level="OFF" additivity="false">
+		<appender-ref ref="console"/>
+	</logger>
+	
+	
+    <!-- <include resource="logback_${spring.profiles.active}.xml"/> -->
+    <root level="INFO">
+        <appender-ref ref="console"/>
+        <appender-ref ref="dailyRolling"/>
+    </root>
+</configuration>

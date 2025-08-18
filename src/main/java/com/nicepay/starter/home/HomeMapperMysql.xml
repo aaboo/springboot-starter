@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nicepay.starter.home.HomeMapperMysql">
+
+<!-- MYSQL 테스트 -->
+<select id="testMysql" resultType="com.nicepay.starter.common.JtMap">
+	/* com.nicepay.starter.home.HomeMapperMysql.testMysql */
+	SELECT A.SUBJECT, A.* 
+	FROM kmp_log_202306 A
+	WHERE 1=1
+	AND DEST_PHONE='01089848094'
+	-- AND CMID='20230602161003036180'
+	LIMIT 10
+</select>
+<update id="rollbackTestMysql1">
+	/* com.nicepay.starter.home.HomeMapperMysql.rollbackTestMysql1 */
+	UPDATE kmp_log_202306
+	SET SUBJECT = '[ tPay ] 모바일 인증번호1'
+	WHERE 1=1
+	AND DEST_PHONE='01089848094'
+	AND CMID='20230602161003036180'
+</update>
+<update id="rollbackTestMysql2">
+	/* com.nicepay.starter.home.HomeMapperMysql.rollbackTestMysql2 */
+	UPDATE kmp_log_202306
+	SET SUBJECT = '[ tPay ] 모바일 인증번호2'
+	WHERE 1=1
+	AND DEST_PHONE='01089848094'
+	AND CMIDD='20230602161003036180'
+</update>
+
+</mapper>

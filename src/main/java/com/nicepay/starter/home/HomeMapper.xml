@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nicepay.starter.home.HomeMapper">
+
+<select id="test" resultType="String">
+	/* com.nicepay.starter.home.HomeMapper.test */
+	SELECT NVL(APPLICANT,'X')
+	FROM USERS_DETAIL
+	WHERE USERID='aaboo'
+</select>
+<select id="heartBeat" resultType="String">
+	/* com.nicepay.starter.home.HomeMapper.heartBeat */
+	SELECT 1 FROM DUAL
+</select>
+<!-- rollback 테스트1 -->
+<update id="rollbackTest1">
+	/* com.nicepay.starter.home.HomeMapper.rollbackTest1 */
+	UPDATE USERS_DETAIL
+	SET APPLICANT='차부용1'
+	WHERE USERID='aaboo'
+</update>
+<!-- rollback 테스트2 -->
+<update id="rollbackTest2">
+	/* com.nicepay.starter.home.HomeMapper.rollbackTest2 */
+	UPDATE USERS_DETAIL
+	SET APPLICANT='차부용2'
+	WHERE USERIDD='aaboo'
+</update>
+	
+</mapper>
